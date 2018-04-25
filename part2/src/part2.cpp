@@ -166,7 +166,24 @@ void drawMesh(Context &ctx, GLuint program, const MeshVAO &meshVAO)
     // Concatenate the model, view, and projection matrices to a
     // ModelViewProjection (MVP) matrix and pass it as a uniform
     // variable to the shader program
+	glm::vec3 model_pos = glm::vec3(0.0f, 0.0f, -4.0f);
+	glm::vec3 camera_pos = glm::vec3(0.0f, 2.0f, 0.0f);
+	glm::vec3 up_vector = glm::vec3(0.0f, 1.0f, 0.0f);
+	model = glm::translate(model, model_pos);
+	model = model * trackballGetRotationMatrix(ctx.trackball);
+	view = glm::lookAt(camera_pos, model_pos, up_vector);
+	projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.01f, 100.0f);
 
+	glm::mat4 mvp = projection;
+	mvp = mvp * view;
+	mvp = mvp * model;
+
+	glm::mat4 mv = view * model;
+
+	glUniformMatrix4fv(glGetUniformLocation(ctx.program, "u_mvp"),
+		1, GL_FALSE, &mvp[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(ctx.program, "u_mv"),
+		1, GL_FALSE, &mv[0][0]);
 
     glBindVertexArray(meshVAO.vao);
     glDrawElements(GL_TRIANGLES, meshVAO.numIndices, GL_UNSIGNED_INT, 0);
