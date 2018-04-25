@@ -163,9 +163,9 @@ void drawCube(Context &ctx)
 	glm::mat4 view = glm::mat4(1.0f);
 	glm::mat4 projection = glm::mat4(1.0f);
 		
-	view = glm::lookAt(glm::vec3(0.0f, 2.0f, 0.0f), glm::vec3(0.0f, 0.0f, -4.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	view = glm::lookAt(glm::vec3(0.0f, 2.0f + glm::sin((float)elapsed_time*1.0f)*5.0, 0.0f), glm::vec3(0.0f, 0.0f, -4.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
-    projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.01f, 10.0f);
+    projection = glm::perspective(glm::radians(30.0f), 1.0f, 0.01f, 100.0f);
 
     // Concatenate the model, view, and projection matrices to a
     // ModelViewProjection (MVP) matrix and pass it as a uniform
