@@ -3,11 +3,12 @@
 #extension GL_ARB_explicit_attrib_location : require
 
 layout(location = 0) in vec4 a_position;
+uniform mat4 u_mvp;
 
 out vec3 v_color;
 
 void main()
 {
-    gl_Position = a_position;
+    gl_Position = a_position * u_mvp;
 	v_color = a_position.xyz + 0.5;
 }

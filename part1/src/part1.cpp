@@ -161,11 +161,14 @@ void drawCube(Context &ctx)
     // Concatenate the model, view, and projection matrices to a
     // ModelViewProjection (MVP) matrix and pass it as a uniform
     // variable to the shader program.
-    //
+	glm::mat4 mvp = projection;
+	mvp = mvp * view;
+	mvp = mvp * model;
     // Hint: you pass GLM matrices to shader programs like this:
     // glUniformMatrix4fv(glGetUniformLocation(program, "u_mvp"),
     //                    1, GL_FALSE, &mvp[0][0]);
-
+	glUniformMatrix4fv(glGetUniformLocation(ctx.program, "u_mvp"),
+	                    1, GL_FALSE, &mvp[0][0]);
 
     glBindVertexArray(ctx.cubeVAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);
