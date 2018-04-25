@@ -168,7 +168,7 @@ void drawCube(Context &ctx)
 
 
     glBindVertexArray(ctx.cubeVAO);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArray(ctx.defaultVAO);
 
     glUseProgram(0);
