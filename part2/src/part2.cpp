@@ -147,7 +147,7 @@ void init(Context &ctx)
     ctx.program = loadShaderProgram(shaderDir() + "mesh.vert",
                                     shaderDir() + "mesh.frag");
 
-    loadMesh((modelDir() + "armadillo.obj"), &ctx.mesh);
+    loadMesh((modelDir() + "bunny.obj"), &ctx.mesh);
     createMeshVAO(ctx, ctx.mesh, &ctx.meshVAO);
 
     initializeTrackball(ctx);
@@ -172,7 +172,7 @@ void drawMesh(Context &ctx, GLuint program, const MeshVAO &meshVAO)
 	model = glm::translate(model, model_pos);
 	model = model * trackballGetRotationMatrix(ctx.trackball);
 	view = glm::lookAt(camera_pos, model_pos, up_vector);
-	projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.01f, 100.0f);
+	projection = glm::perspective(glm::radians(45.0f), 3.0f / 2.0f, 0.01f, 100.0f);
 
 	glm::mat4 mvp = projection;
 	mvp = mvp * view;

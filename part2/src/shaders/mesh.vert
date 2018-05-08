@@ -22,6 +22,7 @@ void main()
 	vec3 N = normalize(mat3(u_mv) * a_normal);
 
 	// Calculate the view-space light direction
+	vec3 u_light_position = vec3(0.0, 10.0, 5.0);
 	vec3 L = normalize(u_light_position - position_eye);
 
 	// Calculate the diffuse (Lambertian) reflection term
