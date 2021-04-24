@@ -72,54 +72,58 @@ void createCube(Context &ctx)
     // given; you have to define the rest!
     const GLfloat vertices[] = {
         // front face
-		-0.5f,	-0.5f,	0.5f,
-		0.5f,	-0.5f,	0.5f,
-		0.5f,	0.5f,	0.5f,
+        -0.5f, -0.5f,  0.5f, // first triangle starts here
+         0.5f, -0.5f,  0.5f,
+         0.5f,  0.5f,  0.5f, // first triangle ends here
 
-		0.5f,	0.5f,	0.5f,
-		-0.5f,	0.5f,	0.5f,
-		-0.5f,	-0.5f,	0.5f,
+         0.5f,  0.5f,  0.5f, // second triangle starts here
+        -0.5f,  0.5f,  0.5f,
+        -0.5f, -0.5f,  0.5f, // second triangle ends here
 
         // back face
-		-0.5f,	-0.5f,	-0.5f,
-		0.5f,	-0.5f,	-0.5f,
-		0.5f,	0.5f,	-0.5f,
+        -0.5f, -0.5f,  -0.5f,
+         0.5f, -0.5f,  -0.5f,
+         0.5f,  0.5f,  -0.5f,
 
-		0.5f,	0.5f,	-0.5f,
-		-0.5f,	0.5f,	-0.5f,
-		-0.5f,	-0.5f,	-0.5f,
+         0.5f,  0.5f,  -0.5f,
+        -0.5f,  0.5f,  -0.5f,
+        -0.5f, -0.5f,  -0.5f,
+ 
         // left face
-		-0.5f,	-0.5f,	-0.5f,
-		-0.5f,	-0.5f,	0.5f,
-		-0.5f,	0.5f,	0.5f,
+        -0.5f, -0.5f,  -0.5f,
+        -0.5f, -0.5f,   0.5f,
+        -0.5f,  0.5f,   0.5f,
 
-		-0.5f,	0.5f,	0.5f,
-		-0.5f,	0.5f,	-0.5f,
-		-0.5f,	-0.5f,	-0.5f,
+        -0.5f,  0.5f,   0.5f,
+        -0.5f,  0.5f,  -0.5f,
+        -0.5f, -0.5f,  -0.5f,
+
         // right face
-		0.5f,	-0.5f,	-0.5f,
-		0.5f,	-0.5f,	0.5f,
-		0.5f,	0.5f,	0.5f,
+        0.5f, -0.5f,  -0.5f,
+        0.5f, -0.5f,   0.5f,
+        0.5f,  0.5f,   0.5f,
 
-		0.5f,	0.5f,	0.5f,
-		0.5f,	0.5f,	-0.5f,
-		0.5f,	-0.5f,	-0.5f,
+        0.5f,  0.5f,   0.5f,
+        0.5f,  0.5f,  -0.5f,
+        0.5f, -0.5f,  -0.5f,
+
         // top face
-		-0.5f,	0.5f,	-0.5f,
-		-0.5f,	0.5f,	0.5f,
-		0.5f,	0.5f,	0.5f,
+       -0.5f,  0.5f,  -0.5f,
+       -0.5f,  0.5f,   0.5f,
+        0.5f,  0.5f,   0.5f,
 
-		0.5f,	0.5f,	0.5f,
-		0.5f,	0.5f,	-0.5f,
-		-0.5f,	0.5f,	-0.5f,
+        0.5f,  0.5f,   0.5f,
+        0.5f,  0.5f,  -0.5f,
+       -0.5f,  0.5f,  -0.5f,
+
         // bottom face
-		-0.5f,	-0.5f,	-0.5f,
-		-0.5f,	-0.5f,	0.5f,
-		0.5f,	-0.5f,	0.5f,
+       -0.5f, -0.5f,  -0.5f,
+       -0.5f, -0.5f,   0.5f,
+        0.5f, -0.5f,   0.5f,
 
-		0.5f,	-0.5f,	0.5f,
-		0.5f,	-0.5f,	-0.5f,
-		-0.5f,	-0.5f,	-0.5f,
+        0.5f, -0.5f,   0.5f,
+        0.5f, -0.5f,  -0.5f,
+       -0.5f, -0.5f,  -0.5f,
     };
 
     // Generates and populates a vertex buffer object (VBO) for the
@@ -154,19 +158,23 @@ void drawCube(Context &ctx)
     double elapsed_time = glfwGetTime();
 
     // Define the model, view, and projection matrices here
-	glm::vec3 axis = glm::vec3(0.5f, 1.0f, 0.0f);
+    glm::mat4 model = glm::mat4(1.0f);
+    glm::mat4 view = glm::mat4(1.0f);
+    glm::mat4 projection = glm::mat4(1.0f);
 
-	glm::mat4 model = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f));
-	model = glm::translate(model, glm::vec3(0.0f, 0.0f, -4.0f));
-	model = glm::rotate(model, (float)elapsed_time*1.0f, axis);
-
-	glm::mat4 view = glm::mat4(1.0f);
-	glm::mat4 projection = glm::mat4(1.0f);
-		
-	view = glm::lookAt(glm::vec3(0.0f, 2.0f + glm::sin((float)elapsed_time*1.0f)*5.0, 0.0f), glm::vec3(0.0f, 0.0f, -4.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-
-    projection = glm::perspective(glm::radians(30.0f), 1.0f, 0.01f, 100.0f);
-
+//    model = glm::translate(model, glm::vec3(0.2f));
+    model = glm::rotate(model, 1.0f, glm::vec3(1.0f));
+/*
+    view = glm::lookAt(glm::vec3(1.0f, 1.0f, 1.0f),
+                        glm::vec3(0.0f, .0f, .0f),
+                        glm::vec3(0.0f, 1.0f, 0.0f));
+*/
+/*
+      projection = glm::perspective(1.2f,
+                                1.0f,
+                                0.1f,
+                                100.0f);
+*/
     // Concatenate the model, view, and projection matrices to a
     // ModelViewProjection (MVP) matrix and pass it as a uniform
     // variable to the shader program.
@@ -176,8 +184,8 @@ void drawCube(Context &ctx)
     // Hint: you pass GLM matrices to shader programs like this:
     // glUniformMatrix4fv(glGetUniformLocation(program, "u_mvp"),
     //                    1, GL_FALSE, &mvp[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(ctx.program, "u_mvp"),
-	                    1, GL_FALSE, &mvp[0][0]);
+
+    glUniformMatrix4fv(glGetUniformLocation(ctx.program, "u_mvp"), 1, GL_FALSE, &mvp[0][0]);
 
     glBindVertexArray(ctx.cubeVAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);
